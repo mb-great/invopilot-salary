@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Set the basePath to cleanly isolate the app on the main domain
-  basePath: '/tools/salary-calculator',
   // Redirect root path for local development convenience
   async redirects() {
     return [
       {
         source: '/',
-        destination: '/tools/salary-calculator/27-an-hour',
-        basePath: false,
+        destination: '/27-an-hour',
         permanent: false,
       },
     ];
