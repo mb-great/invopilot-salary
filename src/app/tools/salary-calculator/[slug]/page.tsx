@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 import {
   salaryData,
+  getEntryFromSlug,
   getHourlyRate,
   getAnnualSalary,
   usd,
@@ -31,20 +32,20 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const entry = salaryData.find((e) => e.slug === slug);
+  const entry = getEntryFromSlug(slug);
   if (!entry) return {};
 
   const hourly = getHourlyRate(entry);
   const annual = getAnnualSalary(entry);
   const isHourly = entry.type === "hourly";
 
-  const title = isHourly
+  const title = entry.seoTitle || (isHourly
     ? `${entry.displayLabel} Is How Much a Year? (${new Date().getFullYear()} Breakdown)`
-    : `${entry.displayLabel} Is How Much an Hour? (${new Date().getFullYear()} Breakdown)`;
+    : `${entry.displayLabel} Is How Much an Hour? (${new Date().getFullYear()} Breakdown)`);
 
-  const description = isHourly
+  const description = entry.seoDescription || (isHourly
     ? `${entry.displayLabel} is ${usd(annual)} a year based on 2,080 hours. See monthly, biweekly, weekly, and daily breakdowns plus an interactive calculator.`
-    : `${entry.displayLabel} is ${usd(hourly, 2)} an hour. See your monthly, biweekly, and weekly pay with our interactive salary calculator.`;
+    : `${entry.displayLabel} is ${usd(hourly, 2)} an hour. See your monthly, biweekly, and weekly pay with our interactive salary calculator.`);
 
   return {
     title,
@@ -105,7 +106,7 @@ export default async function SalaryPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const entry = salaryData.find((e) => e.slug === slug);
+  const entry = getEntryFromSlug(slug);
   if (!entry) notFound();
 
   const hourly  = getHourlyRate(entry);
@@ -115,9 +116,9 @@ export default async function SalaryPage({
   const weekly  = annual / 52;
   const isHourly = entry.type === "hourly";
 
-  const pageTitle = isHourly
+  const pageTitle = entry.seoTitle || (isHourly
     ? `${entry.displayLabel} Is How Much a Year?`
-    : `${entry.displayLabel} Is How Much an Hour?`;
+    : `${entry.displayLabel} Is How Much an Hour?`);
 
   const faqItems = buildFAQ(entry);
   const related  = salaryData.filter((e) => e.slug !== slug).slice(0, 12);

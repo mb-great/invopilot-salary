@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "@/components/wp-styles.css";
+import WPHeader from "@/components/WPHeader";
+import WPFooter from "@/components/WPFooter";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://invopilot.com"),
@@ -18,7 +21,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <WPHeader />
+        <div style={{ paddingTop: '64px' }}>
+          {children}
+        </div>
+        <WPFooter />
+      </body>
     </html>
   );
 }

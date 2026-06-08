@@ -27,23 +27,28 @@ export default function Calculator({
   defaultWeeksPerYear = 52,
   defaultTaxRate = 22,
 }: Props) {
-  const [hourly, setHourly]   = useState(defaultHourly);
-  const [hpw, setHpw]         = useState(defaultHoursPerWeek);
-  const [wpy, setWpy]         = useState(defaultWeeksPerYear);
-  const [tax, setTax]         = useState(defaultTaxRate);
+  const [hourly, setHourly]   = useState<number | string>(defaultHourly);
+  const [hpw, setHpw]         = useState<number | string>(defaultHoursPerWeek);
+  const [wpy, setWpy]         = useState<number | string>(defaultWeeksPerYear);
+  const [tax, setTax]         = useState<number | string>(defaultTaxRate);
   const [rows, setRows]       = useState<Record<string, { gross: number; net: number }>>({});
-  const [totalHours, setTotalHours] = useState(hpw * wpy);
+  const [totalHours, setTotalHours] = useState(Number(hpw) * Number(wpy));
 
   const compute = useCallback(() => {
-    const annual  = hourly * hpw * wpy;
-    const netAnnual = annual * (1 - tax / 100);
-    const hrs = hpw * wpy;
+    const h = Number(hourly) || 0;
+    const hw = Number(hpw) || 0;
+    const wy = Number(wpy) || 0;
+    const t = Number(tax) || 0;
+
+    const annual  = h * hw * wy;
+    const netAnnual = annual * (1 - t / 100);
+    const hrs = hw * wy;
     setTotalHours(hrs);
     setRows({
-      hourly:      { gross: hourly,          net: hourly * (1 - tax / 100) },
-      daily:       { gross: hourly * 8,      net: hourly * 8 * (1 - tax / 100) },
-      weekly:      { gross: annual / wpy,    net: netAnnual / wpy },
-      biweekly:    { gross: annual / (wpy / 2), net: netAnnual / (wpy / 2) },
+      hourly:      { gross: h,               net: h * (1 - t / 100) },
+      daily:       { gross: h * 8,           net: h * 8 * (1 - t / 100) },
+      weekly:      { gross: wy ? annual / wy : 0,     net: wy ? netAnnual / wy : 0 },
+      biweekly:    { gross: wy ? annual / (wy / 2) : 0, net: wy ? netAnnual / (wy / 2) : 0 },
       semiMonthly: { gross: annual / 24,     net: netAnnual / 24 },
       monthly:     { gross: annual / 12,     net: netAnnual / 12 },
       annual:      { gross: annual,          net: netAnnual },
@@ -137,8 +142,8 @@ function Control({
   decimals = 0,
 }: {
   label: string;
-  value: number;
-  onChange: (n: number) => void;
+  value: number | string;
+  onChange: (n: number | string) => void;
   prefix?: string;
   suffix?: string;
   min?: number;
@@ -147,8 +152,13 @@ function Control({
   decimals?: number;
 }) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const v = parseFloat(e.target.value);
-    if (!isNaN(v)) onChange(v);
+    const raw = e.target.value;
+    if (raw === "") {
+      onChange("");
+      return;
+    }
+    const v = parseFloat(raw);
+    if (!isNaN(v)) onChange(raw);
   };
 
   return (
@@ -158,7 +168,7 @@ function Control({
         {prefix && <span className={styles.adornment}>{prefix}</span>}
         <input
           type="number"
-          value={decimals > 0 ? value : value}
+          value={value}
           min={min}
           max={max}
           step={step}

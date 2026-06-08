@@ -3,33 +3,49 @@ export type SalaryEntry = {
   type: "hourly" | "yearly";
   value: number; // hourly rate OR yearly salary
   displayLabel: string; // e.g. "$27 an hour" or "$75,000 a year"
+  seoTitle?: string; // Optional manual SEO title
+  seoDescription?: string; // Optional manual SEO description
 };
 
-// ─── ADD MORE ENTRIES HERE TO SCALE ───────────────────────────────────────────
+// Top 50 Salary Pages based on US Search Volume (from your CSV data)
 export const salaryData: SalaryEntry[] = [
-  // Hourly (12)
-  { slug: "27-an-hour",  type: "hourly", value: 27,  displayLabel: "$27 an hour"  },
-  { slug: "32-an-hour",  type: "hourly", value: 32,  displayLabel: "$32 an hour"  },
-  { slug: "33-an-hour",  type: "hourly", value: 33,  displayLabel: "$33 an hour"  },
-  { slug: "26-an-hour",  type: "hourly", value: 26,  displayLabel: "$26 an hour"  },
-  { slug: "38-an-hour",  type: "hourly", value: 38,  displayLabel: "$38 an hour"  },
-  { slug: "42-an-hour",  type: "hourly", value: 42,  displayLabel: "$42 an hour"  },
-  { slug: "36-an-hour",  type: "hourly", value: 36,  displayLabel: "$36 an hour"  },
-  { slug: "45-an-hour",  type: "hourly", value: 45,  displayLabel: "$45 an hour"  },
-  { slug: "65-an-hour",  type: "hourly", value: 65,  displayLabel: "$65 an hour"  },
-  { slug: "37-an-hour",  type: "hourly", value: 37,  displayLabel: "$37 an hour"  },
-  { slug: "70-an-hour",  type: "hourly", value: 70,  displayLabel: "$70 an hour"  },
-  { slug: "75-an-hour",  type: "hourly", value: 75,  displayLabel: "$75 an hour"  },
+  // === TOP HOURLY PAGES (Highest Search Volume) ===
+  { slug: "25-an-hour", type: "hourly", value: 25, displayLabel: "$25 an hour" },
+  { slug: "30-an-hour", type: "hourly", value: 30, displayLabel: "$30 an hour" },
+  { slug: "35-an-hour", type: "hourly", value: 35, displayLabel: "$35 an hour" },
+  { slug: "20-an-hour", type: "hourly", value: 20, displayLabel: "$20 an hour" },
+  { slug: "40-an-hour", type: "hourly", value: 40, displayLabel: "$40 an hour" },
+  { slug: "23-an-hour", type: "hourly", value: 23, displayLabel: "$23 an hour" },
+  { slug: "50-an-hour", type: "hourly", value: 50, displayLabel: "$50 an hour" },
+  { slug: "22-an-hour", type: "hourly", value: 22, displayLabel: "$22 an hour" },
+  { slug: "18-an-hour", type: "hourly", value: 18, displayLabel: "$18 an hour" },
+  { slug: "21-an-hour", type: "hourly", value: 21, displayLabel: "$21 an hour" },
+  { slug: "27-an-hour", type: "hourly", value: 27, displayLabel: "$27 an hour" },
+  { slug: "28-an-hour", type: "hourly", value: 28, displayLabel: "$28 an hour" },
+  { slug: "24-an-hour", type: "hourly", value: 24, displayLabel: "$24 an hour" },
+  { slug: "26-an-hour", type: "hourly", value: 26, displayLabel: "$26 an hour" },
+  { slug: "19-an-hour", type: "hourly", value: 19, displayLabel: "$19 an hour" },
+  { slug: "32-an-hour", type: "hourly", value: 32, displayLabel: "$32 an hour" },
+  { slug: "45-an-hour", type: "hourly", value: 45, displayLabel: "$45 an hour" },
 
-  // Yearly (8)
-  { slug: "75000-a-year",  type: "yearly", value: 75000,  displayLabel: "$75,000 a year"  },
-  { slug: "48000-a-year",  type: "yearly", value: 48000,  displayLabel: "$48,000 a year"  },
-  { slug: "56000-a-year",  type: "yearly", value: 56000,  displayLabel: "$56,000 a year"  },
-  { slug: "53000-a-year",  type: "yearly", value: 53000,  displayLabel: "$53,000 a year"  },
-  { slug: "50000-a-year",  type: "yearly", value: 50000,  displayLabel: "$50,000 a year"  },
-  { slug: "55000-a-year",  type: "yearly", value: 55000,  displayLabel: "$55,000 a year"  },
-  { slug: "43000-a-year",  type: "yearly", value: 43000,  displayLabel: "$43,000 a year"  },
-  { slug: "150000-a-year", type: "yearly", value: 150000, displayLabel: "$150,000 a year" },
+  // === TOP YEARLY PAGES (Highest Search Volume) ===
+  { slug: "60000-a-year", type: "yearly", value: 60000, displayLabel: "$60,000 a year" },
+  { slug: "50000-a-year", type: "yearly", value: 50000, displayLabel: "$50,000 a year" },
+  { slug: "70000-a-year", type: "yearly", value: 70000, displayLabel: "$70,000 a year" },
+  { slug: "80000-a-year", type: "yearly", value: 80000, displayLabel: "$80,000 a year" },
+  { slug: "65000-a-year", type: "yearly", value: 65000, displayLabel: "$65,000 a year" },
+  { slug: "45000-a-year", type: "yearly", value: 45000, displayLabel: "$45,000 a year" },
+  { slug: "40000-a-year", type: "yearly", value: 40000, displayLabel: "$40,000 a year" },
+  { slug: "55000-a-year", type: "yearly", value: 55000, displayLabel: "$55,000 a year" },
+  { slug: "75000-a-year", type: "yearly", value: 75000, displayLabel: "$75,000 a year" },
+  { slug: "90000-a-year", type: "yearly", value: 90000, displayLabel: "$90,000 a year" },
+  { slug: "100000-a-year", type: "yearly", value: 100000, displayLabel: "$100,000 a year" },
+  { slug: "85000-a-year", type: "yearly", value: 85000, displayLabel: "$85,000 a year" },
+  { slug: "35000-a-year", type: "yearly", value: 35000, displayLabel: "$35,000 a year" },
+  { slug: "120000-a-year", type: "yearly", value: 120000, displayLabel: "$120,000 a year" },
+  { slug: "95000-a-year", type: "yearly", value: 95000, displayLabel: "$95,000 a year" },
+  { slug: "110000-a-year", type: "yearly", value: 110000, displayLabel: "$110,000 a year" },
+  { slug: "130000-a-year", type: "yearly", value: 130000, displayLabel: "$130,000 a year" },
 ];
 
 // ─── Derived helpers ───────────────────────────────────────────────────────────
@@ -63,4 +79,24 @@ export function getRelatedEntries(current: SalaryEntry): SalaryEntry[] {
     .filter((e) => e.slug !== current.slug)
     .sort(() => Math.random() - 0.5)
     .slice(0, 10);
+}
+
+export function getEntryFromSlug(slug: string): SalaryEntry | null {
+  const existing = salaryData.find((e) => e.slug === slug);
+  if (existing) return existing;
+
+  // Forgiving regex: ignores case and allows trailing characters/spaces
+  const hourlyMatch = slug.match(/^(\d+)[-\s]+an[-\s]+hour/i);
+  if (hourlyMatch) {
+    const val = parseInt(hourlyMatch[1], 10);
+    return { slug, type: "hourly", value: val, displayLabel: `$${val.toLocaleString()} an hour` };
+  }
+
+  const yearlyMatch = slug.match(/^(\d+)[-\s]+a[-\s]+year/i);
+  if (yearlyMatch) {
+    const val = parseInt(yearlyMatch[1], 10);
+    return { slug, type: "yearly", value: val, displayLabel: `$${val.toLocaleString()} a year` };
+  }
+
+  return null;
 }
