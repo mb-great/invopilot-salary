@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/tools/salary-calculator',
   // Redirect root path for local development convenience
   async redirects() {
     return [
