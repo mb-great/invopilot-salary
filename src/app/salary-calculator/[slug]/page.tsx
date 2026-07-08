@@ -10,13 +10,13 @@ import {
   STANDARD_HOURS_PER_YEAR,
   STANDARD_HOURS_PER_WEEK,
   STANDARD_WEEKS_PER_YEAR,
-} from "../../lib/salary-data";
-import { buildFAQ } from "../../lib/faq-builder";
+} from "@/lib/salary-data";
+import { buildFAQ } from "@/lib/faq-builder";
 
-import Calculator  from "../../components/Calculator";
-import FAQ         from "../../components/FAQ";
-import CTABanner   from "../../components/CTABanner";
-import RelatedLinks from "../../components/RelatedLinks";
+import Calculator  from "@/components/Calculator";
+import FAQ         from "@/components/FAQ";
+import CTABanner   from "@/components/CTABanner";
+import RelatedLinks from "@/components/RelatedLinks";
 
 import styles from "./page.module.css";
 
