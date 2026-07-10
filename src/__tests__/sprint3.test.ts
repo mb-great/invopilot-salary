@@ -26,7 +26,7 @@ describe('Missing Pages inclusion', () => {
 
   it('includes all 6 missing yearly pages', () => {
     for (const y of missingYearly) {
-      const slug = `${y}-a-year`;
+      const slug = `${y / 1000}k-a-year`;
       const entry = getEntryFromSlug(slug);
       expect(entry).not.toBeNull();
       expect(entry?.type).toBe('yearly');
@@ -55,7 +55,7 @@ describe('Cross-Link logic', () => {
   });
 
   it('finds nearest hourly cross-link for yearly rate', () => {
-    const yearlyEntry = getEntryFromSlug('50000-a-year')!;
+    const yearlyEntry = getEntryFromSlug('50k-a-year')!;
     // 50000 / 2080 = 24.03. Nearest is 24.
     const link = getCrossLink(yearlyEntry);
     expect(link).not.toBeNull();

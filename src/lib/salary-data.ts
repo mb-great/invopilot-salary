@@ -36,17 +36,6 @@ export const salaryData: SalaryEntry[] = [
   { slug: "65000-a-year", type: "yearly", value: 65000, displayLabel: "$65,000 a year" },
   { slug: "45000-a-year", type: "yearly", value: 45000, displayLabel: "$45,000 a year" },
   { slug: "40000-a-year", type: "yearly", value: 40000, displayLabel: "$40,000 a year" },
-  { slug: "55000-a-year", type: "yearly", value: 55000, displayLabel: "$55,000 a year" },
-  { slug: "75000-a-year", type: "yearly", value: 75000, displayLabel: "$75,000 a year" },
-  { slug: "90000-a-year", type: "yearly", value: 90000, displayLabel: "$90,000 a year" },
-  { slug: "100000-a-year", type: "yearly", value: 100000, displayLabel: "$100,000 a year" },
-  { slug: "85000-a-year", type: "yearly", value: 85000, displayLabel: "$85,000 a year" },
-  { slug: "35000-a-year", type: "yearly", value: 35000, displayLabel: "$35,000 a year" },
-  { slug: "120000-a-year", type: "yearly", value: 120000, displayLabel: "$120,000 a year" },
-  { slug: "95000-a-year", type: "yearly", value: 95000, displayLabel: "$95,000 a year" },
-  { slug: "110000-a-year", type: "yearly", value: 110000, displayLabel: "$110,000 a year" },
-  { slug: "130000-a-year", type: "yearly", value: 130000, displayLabel: "$130,000 a year" },
-
   // === NEW HOURLY PAGES (Fix 9) ===
   { slug: "22.5-an-hour", type: "hourly", value: 22.5, displayLabel: "$22.50 an hour" },
   { slug: "48-an-hour", type: "hourly", value: 48, displayLabel: "$48 an hour" },
@@ -67,13 +56,54 @@ export const salaryData: SalaryEntry[] = [
   { slug: "110-an-hour", type: "hourly", value: 110, displayLabel: "$110 an hour" },
   { slug: "120-an-hour", type: "hourly", value: 120, displayLabel: "$120 an hour" },
 
-  // === NEW YEARLY PAGES (Fix 9) ===
-  { slug: "59000-a-year", type: "yearly", value: 59000, displayLabel: "$59,000 a year" },
-  { slug: "73000-a-year", type: "yearly", value: 73000, displayLabel: "$73,000 a year" },
-  { slug: "76000-a-year", type: "yearly", value: 76000, displayLabel: "$76,000 a year" },
-  { slug: "77000-a-year", type: "yearly", value: 77000, displayLabel: "$77,000 a year" },
-  { slug: "82000-a-year", type: "yearly", value: 82000, displayLabel: "$82,000 a year" },
-  { slug: "92000-a-year", type: "yearly", value: 92000, displayLabel: "$92,000 a year" },
+  // === NEW YEARLY PAGES ===
+  { slug: "30k-a-year", type: "yearly", value: 30000, displayLabel: "$30k a year" },
+  { slug: "35k-a-year", type: "yearly", value: 35000, displayLabel: "$35k a year" },
+  { slug: "37k-a-year", type: "yearly", value: 37000, displayLabel: "$37k a year" },
+  { slug: "39k-a-year", type: "yearly", value: 39000, displayLabel: "$39k a year" },
+  { slug: "40k-a-year", type: "yearly", value: 40000, displayLabel: "$40k a year" },
+  { slug: "41k-a-year", type: "yearly", value: 41000, displayLabel: "$41k a year" },
+  { slug: "42k-a-year", type: "yearly", value: 42000, displayLabel: "$42k a year" },
+  { slug: "43k-a-year", type: "yearly", value: 43000, displayLabel: "$43k a year" },
+  { slug: "44k-a-year", type: "yearly", value: 44000, displayLabel: "$44k a year" },
+  { slug: "45k-a-year", type: "yearly", value: 45000, displayLabel: "$45k a year" },
+  { slug: "47k-a-year", type: "yearly", value: 47000, displayLabel: "$47k a year" },
+  { slug: "48k-a-year", type: "yearly", value: 48000, displayLabel: "$48k a year" },
+  { slug: "49k-a-year", type: "yearly", value: 49000, displayLabel: "$49k a year" },
+  { slug: "50k-a-year", type: "yearly", value: 50000, displayLabel: "$50k a year" },
+  { slug: "51k-a-year", type: "yearly", value: 51000, displayLabel: "$51k a year" },
+  { slug: "52k-a-year", type: "yearly", value: 52000, displayLabel: "$52k a year" },
+  { slug: "53k-a-year", type: "yearly", value: 53000, displayLabel: "$53k a year" },
+  { slug: "54k-a-year", type: "yearly", value: 54000, displayLabel: "$54k a year" },
+  { slug: "55k-a-year", type: "yearly", value: 55000, displayLabel: "$55k a year" },
+  { slug: "56k-a-year", type: "yearly", value: 56000, displayLabel: "$56k a year" },
+  { slug: "57k-a-year", type: "yearly", value: 57000, displayLabel: "$57k a year" },
+  { slug: "58k-a-year", type: "yearly", value: 58000, displayLabel: "$58k a year" },
+  { slug: "59k-a-year", type: "yearly", value: 59000, displayLabel: "$59k a year" },
+  { slug: "60k-a-year", type: "yearly", value: 60000, displayLabel: "$60k a year" },
+  { slug: "63k-a-year", type: "yearly", value: 63000, displayLabel: "$63k a year" },
+  { slug: "64k-a-year", type: "yearly", value: 64000, displayLabel: "$64k a year" },
+  { slug: "65k-a-year", type: "yearly", value: 65000, displayLabel: "$65k a year" },
+  { slug: "67k-a-year", type: "yearly", value: 67000, displayLabel: "$67k a year" },
+  { slug: "68k-a-year", type: "yearly", value: 68000, displayLabel: "$68k a year" },
+  { slug: "70k-a-year", type: "yearly", value: 70000, displayLabel: "$70k a year" },
+  { slug: "72k-a-year", type: "yearly", value: 72000, displayLabel: "$72k a year" },
+  { slug: "73k-a-year", type: "yearly", value: 73000, displayLabel: "$73k a year" },
+  { slug: "75k-a-year", type: "yearly", value: 75000, displayLabel: "$75k a year" },
+  { slug: "76k-a-year", type: "yearly", value: 76000, displayLabel: "$76k a year" },
+  { slug: "77k-a-year", type: "yearly", value: 77000, displayLabel: "$77k a year" },
+  { slug: "78k-a-year", type: "yearly", value: 78000, displayLabel: "$78k a year" },
+  { slug: "80k-a-year", type: "yearly", value: 80000, displayLabel: "$80k a year" },
+  { slug: "82k-a-year", type: "yearly", value: 82000, displayLabel: "$82k a year" },
+  { slug: "85k-a-year", type: "yearly", value: 85000, displayLabel: "$85k a year" },
+  { slug: "90k-a-year", type: "yearly", value: 90000, displayLabel: "$90k a year" },
+  { slug: "92k-a-year", type: "yearly", value: 92000, displayLabel: "$92k a year" },
+  { slug: "95k-a-year", type: "yearly", value: 95000, displayLabel: "$95k a year" },
+  { slug: "100k-a-year", type: "yearly", value: 100000, displayLabel: "$100k a year" },
+  { slug: "110k-a-year", type: "yearly", value: 110000, displayLabel: "$110k a year" },
+  { slug: "120k-a-year", type: "yearly", value: 120000, displayLabel: "$120k a year" },
+  { slug: "130k-a-year", type: "yearly", value: 130000, displayLabel: "$130k a year" },
+  { slug: "150k-a-year", type: "yearly", value: 150000, displayLabel: "$150k a year" },
 ];
 
 // ─── Derived helpers ───────────────────────────────────────────────────────────
@@ -121,12 +151,22 @@ export function getEntryFromSlug(slug: string): SalaryEntry | null {
     return { slug, type: "hourly", value: val, displayLabel: `$${displayVal} an hour` };
   }
 
-  // Forgiving regex: ignores case, allows trailing characters, a/an, supports decimals
-  const yearlyMatch = slug.match(/^([\d\.]+)[-\s]+a(?:n)?[-\s]+year/i);
+  // Forgiving regex: ignores case, allows trailing characters, a/an, supports decimals and "k"
+  const yearlyMatch = slug.match(/^([\d\.]+)(k?)[-\s]+a(?:n)?[-\s]+year/i);
   if (yearlyMatch) {
-    const val = parseFloat(yearlyMatch[1]);
-    const displayVal = Number.isInteger(val) ? val.toLocaleString() : val.toFixed(2);
-    return { slug, type: "yearly", value: val, displayLabel: `$${displayVal} a year` };
+    let val = parseFloat(yearlyMatch[1]);
+    const isK = yearlyMatch[2].toLowerCase() === 'k';
+    if (isK) val *= 1000;
+    
+    // Format appropriately depending on whether it's a k-slug or a full-number slug
+    let displayLabel = "";
+    if (isK) {
+      displayLabel = `$${Number.isInteger(val / 1000) ? (val / 1000) : (val / 1000).toFixed(2)}k a year`;
+    } else {
+      displayLabel = `$${Number.isInteger(val) ? val.toLocaleString() : val.toFixed(2)} a year`;
+    }
+
+    return { slug, type: "yearly", value: val, displayLabel };
   }
 
   return null;

@@ -27,7 +27,20 @@ import styles from "./page.module.css";
 
 // ─── Static generation ────────────────────────────────────────────────────────
 export async function generateStaticParams() {
-  return salaryData.map((e) => ({ slug: e.slug }));
+  const params: { slug: string }[] = [];
+  
+  for (const entry of salaryData) {
+    params.push({ slug: entry.slug });
+    
+    // If it's a k-slug, also build the raw number version for backwards compatibility
+    if (entry.type === "yearly" && entry.slug.includes("k-a-year")) {
+      const numPart = entry.slug.split('k')[0];
+      const val = parseFloat(numPart) * 1000;
+      params.push({ slug: `${val}-a-year` });
+    }
+  }
+  
+  return params;
 }
 
 // ─── Per-page metadata ────────────────────────────────────────────────────────
