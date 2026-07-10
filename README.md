@@ -1,43 +1,49 @@
-# InvoPilot Salary Calculator Pages
+# InvoPilot Tools
 
-A Next.js 14 project that generates **20 SEO-optimised salary calculator pages** (12 hourly + 8 yearly) from a single template, following the Pinebill model.
+A Next.js 14 App Router project that houses SEO-optimised tools for InvoPilot, starting with the **Salary Calculator**. It generates **63 SEO-optimised salary calculator pages** (40 hourly + 23 yearly) from a single dynamic template, strictly built using Test-Driven Development (TDD) for reliability.
 
 ---
 
 ## ✨ Features
 
-- **Dynamic routing** — `/tools/salary-calculator/[slug]` — one template, infinite pages
-- **Single source of truth** — add a new page in `src/lib/salary-data.ts` in one line
-- **Interactive calculator** — adjust hourly rate, hours/week, weeks/year, and tax rate live
-- **JSON-LD schema** — `WebPage` + `FAQPage` structured data on every page
-- **Generated metadata** — unique `<title>` and `<meta description>` per page via Next.js `generateMetadata`
-- **InvoPilot branding** — orange `#f97316` accent throughout
-- **Static export ready** — `next build` produces a fully static site deployable anywhere
-- **Accessible** — semantic HTML, aria attributes, keyboard-navigable FAQ accordion
+- **Dynamic Routing** — `/tools/salary-calculator/[slug]` — one template, infinite pages.
+- **Single Source of Truth** — Add a new page in `src/lib/salary-data.ts` in one line, and the system handles the rest.
+- **Interactive Calculator** — Adjust hourly rate, hours/week, weeks/year, and tax rate live (computed on the server first for SSR indexability).
+- **Fractional & Part-Time Support** — Pages dynamically show quarter rates ($X.25, $X.50) and part-time hour calculations (20, 25, 30, 35 hrs/wk).
+- **Intelligent Cross-Linking** — Automatically pairs hourly rates to their closest yearly equivalent for internal link SEO.
+- **JSON-LD Schema** — Rich `WebPage`, `FAQPage`, and `SoftwareApplication` structured data on every page.
+- **Static Export Ready** — `npm run build` produces a fully static site output deployable anywhere.
+- **TDD Backed** — Fully covered by Vitest to ensure mathematical accuracy and template integrity.
 
 ---
 
-## 📁 Folder structure
+## 📁 Folder Structure
 
 ```
-invopilot-salary/
+invopilot-tools/
 ├── src/
 │   ├── app/
 │   │   ├── layout.tsx                        ← Root layout + Google Fonts
 │   │   ├── globals.css                       ← Design tokens & resets
-│   │   ├── page.tsx                          ← Redirects / → first salary page
-│   │   └── tools/salary-calculator/[slug]/
-│   │       ├── page.tsx                      ← THE template (all 20 pages)
-│   │       └── page.module.css
+│   │   └── salary-calculator/
+│   │       ├── page.tsx                      ← Hub page index
+│   │       └── [slug]/
+│   │           ├── page.tsx                  ← THE template (all 63 pages)
+│   │           └── page.module.css
 │   ├── components/
-│   │   ├── Calculator.tsx / .module.css      ← Interactive salary table
+│   │   ├── Calculator.tsx / .module.css      ← Interactive SSR salary table
+│   │   ├── FractionalRates.tsx               ← Fractional calculations
+│   │   ├── PartTimeHours.tsx                 ← Part time calculations
 │   │   ├── CTABanner.tsx / .module.css       ← Invoice generator CTA
 │   │   ├── FAQ.tsx / .module.css             ← Accordion FAQ
-│   │   ├── Header.tsx / .module.css          ← Sticky nav with logo
-│   │   └── RelatedLinks.tsx / .module.css    ← Chip links to other pages
-│   └── lib/
-│       ├── salary-data.ts                    ← ⭐ ADD NEW PAGES HERE
-│       └── faq-builder.ts                    ← Auto-generates FAQ per entry
+│   │   └── WPHeader.tsx & WPFooter.tsx       ← InvoPilot Global Nav
+│   ├── lib/
+│   │   ├── salary-data.ts                    ← ⭐ ADD NEW PAGES HERE
+│   │   ├── cross-link.ts                     ← Hourly/Yearly linking engine
+│   │   ├── json-ld.ts                        ← Schema generator
+│   │   └── faq-builder.ts                    ← Auto-generates FAQ per entry
+│   └── __tests__/                            ← Vitest TDD suites
+├── public/                                   ← Static assets (logo.webp)
 ├── next.config.js
 ├── tsconfig.json
 ├── package.json
@@ -46,7 +52,7 @@ invopilot-salary/
 
 ---
 
-## 🚀 Running locally
+## 🚀 Running Locally
 
 ### Prerequisites
 - **Node.js** 18.17 or later ([download](https://nodejs.org))
@@ -55,128 +61,62 @@ invopilot-salary/
 ### Steps
 
 ```bash
-# 1. Clone or unzip the project
-cd invopilot-salary
+# 1. Clone the project
+git clone https://github.com/mb-great/invopilot-tools.git
+cd invopilot-tools
 
 # 2. Install dependencies
 npm install
 
 # 3. Start the development server
 npm run dev
+
+# 4. Run tests
+npm run test
 ```
 
-Open **http://localhost:3000** in your browser. You'll be redirected to `/tools/salary-calculator/27-an-hour`.
-
-Browse to any slug, e.g.:
-- http://localhost:3000/tools/salary-calculator/27-an-hour
-- http://localhost:3000/tools/salary-calculator/75000-a-year
+Open **http://localhost:3000** in your browser to view the hub page, or visit a specific slug like `/tools/salary-calculator/22.5-an-hour`.
 
 ---
 
-## 🏗️ Building for production
+## 🏗️ Building for Production
 
 ```bash
-# Build + static export (outputs to /out)
+# Build + static export
 npm run build
 ```
 
-The `out/` folder is a fully static site — upload it to any CDN, Vercel, Netlify, Cloudflare Pages, or S3.
-
-> **Note:** If you plan to use Next.js server features later (ISR, API routes, etc.), remove `output: "export"` from `next.config.js` and deploy to Vercel or a Node host.
+This generates exactly 63 static HTML pages ready for distribution.
 
 ---
 
-## ➕ Adding more salary pages (scales to hundreds)
+## ➕ Adding More Salary Pages
 
 Open **`src/lib/salary-data.ts`** and add one line to the `salaryData` array:
 
 ```ts
-// Hourly example
-{ slug: "50-an-hour", type: "hourly", value: 50, displayLabel: "$50 an hour" },
+// Hourly example (supports decimals!)
+{ slug: "22.5-an-hour", type: "hourly", value: 22.5, displayLabel: "$22.50 an hour" },
 
 // Yearly example
 { slug: "90000-a-year", type: "yearly", value: 90000, displayLabel: "$90,000 a year" },
 ```
 
 That's it. On the next build:
-- A new static page is generated at `/tools/salary-calculator/50-an-hour`
-- It gets unique metadata, JSON-LD schema, FAQ, and calculator pre-set to the right value
-- It appears automatically in the Related Links section of other pages
-
-No other files need to change.
+- A new static page is generated.
+- It gets unique metadata, JSON-LD schema, FAQ, and calculator pre-set to the right value.
+- It automatically links itself to related and cross-linked values.
 
 ---
 
-## 🎨 Branding customisation
-
-All design tokens live in `src/app/globals.css` under `:root`:
-
-```css
---accent:       #f97316;   /* InvoPilot orange — change here for a rebrand */
---accent-hover: #ea580c;
---accent-tint:  #fff7ed;
---font-sans:    "Sora", ...;
---font-mono:    "JetBrains Mono", ...;
-```
-
----
-
-## 🔗 Updating the CTA link
-
-The invoice generator CTA links to `https://invopilot.com/invoice-generator`. To change it, edit `src/components/CTABanner.tsx`:
-
-```tsx
-<a href="https://invopilot.com/invoice-generator" ...>
-```
-
----
-
-## 📋 All 20 pages included
-
-| Slug | Type | Page URL |
-|------|------|----------|
-| `27-an-hour`    | Hourly | `/tools/salary-calculator/27-an-hour` |
-| `32-an-hour`    | Hourly | `/tools/salary-calculator/32-an-hour` |
-| `33-an-hour`    | Hourly | `/tools/salary-calculator/33-an-hour` |
-| `26-an-hour`    | Hourly | `/tools/salary-calculator/26-an-hour` |
-| `38-an-hour`    | Hourly | `/tools/salary-calculator/38-an-hour` |
-| `42-an-hour`    | Hourly | `/tools/salary-calculator/42-an-hour` |
-| `36-an-hour`    | Hourly | `/tools/salary-calculator/36-an-hour` |
-| `45-an-hour`    | Hourly | `/tools/salary-calculator/45-an-hour` |
-| `65-an-hour`    | Hourly | `/tools/salary-calculator/65-an-hour` |
-| `37-an-hour`    | Hourly | `/tools/salary-calculator/37-an-hour` |
-| `70-an-hour`    | Hourly | `/tools/salary-calculator/70-an-hour` |
-| `75-an-hour`    | Hourly | `/tools/salary-calculator/75-an-hour` |
-| `75000-a-year`  | Yearly | `/tools/salary-calculator/75000-a-year` |
-| `48000-a-year`  | Yearly | `/tools/salary-calculator/48000-a-year` |
-| `56000-a-year`  | Yearly | `/tools/salary-calculator/56000-a-year` |
-| `53000-a-year`  | Yearly | `/tools/salary-calculator/53000-a-year` |
-| `50000-a-year`  | Yearly | `/tools/salary-calculator/50000-a-year` |
-| `55000-a-year`  | Yearly | `/tools/salary-calculator/55000-a-year` |
-| `43000-a-year`  | Yearly | `/tools/salary-calculator/43000-a-year` |
-| `150000-a-year` | Yearly | `/tools/salary-calculator/150000-a-year` |
-
----
-
-## 🛠️ Tech stack
+## 🛠️ Tech Stack
 
 | Tool | Version | Purpose |
 |------|---------|---------|
 | Next.js | 14 (App Router) | Framework + static export |
 | React | 18 | UI components |
 | TypeScript | 5 | Type safety |
+| Vitest | 4 | Testing |
 | CSS Modules | — | Scoped component styles |
-| Google Fonts | Sora + JetBrains Mono | Typography |
 
 No external UI libraries, no Tailwind, no runtime CSS-in-JS — purely CSS Modules for maximum performance and portability.
-
----
-
-## 🐛 Troubleshooting
-
-| Issue | Fix |
-|-------|-----|
-| `Module not found: @/*` | Make sure `tsconfig.json` has `"paths": { "@/*": ["./src/*"] }` |
-| Page not found for a slug | Check the slug is in `salary-data.ts` and re-run `npm run dev` |
-| Font flicker on load | Expected on first load in dev; eliminated by `display=swap` in production |
-| `output: "export"` breaks API routes | Remove that line from `next.config.js` if you add server-side features |
