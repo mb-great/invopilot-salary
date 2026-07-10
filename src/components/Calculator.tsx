@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { usd } from "@/lib/salary-data";
+import { usd, computeDefaultRows } from "@/lib/salary-data";
 import styles from "./Calculator.module.css";
 
 interface Props {
@@ -31,8 +31,10 @@ export default function Calculator({
   const [hpw, setHpw]         = useState<number | string>(defaultHoursPerWeek);
   const [wpy, setWpy]         = useState<number | string>(defaultWeeksPerYear);
   const [tax, setTax]         = useState<number | string>(defaultTaxRate);
-  const [rows, setRows]       = useState<Record<string, { gross: number; net: number }>>({});
-  const [totalHours, setTotalHours] = useState(Number(hpw) * Number(wpy));
+  const [rows, setRows]       = useState<Record<string, { gross: number; net: number }>>(
+    () => computeDefaultRows(defaultHourly, defaultHoursPerWeek, defaultWeeksPerYear, defaultTaxRate),
+  );
+  const [totalHours, setTotalHours] = useState(defaultHoursPerWeek * defaultWeeksPerYear);
 
   const compute = useCallback(() => {
     const h = Number(hourly) || 0;

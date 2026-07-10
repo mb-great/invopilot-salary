@@ -10,7 +10,7 @@ export default function WPFooter() {
           {/* Brand Column */}
           <div className="ip-f-brand">
             <a href="https://invopilot.com/" className="ip-f-logo">
-              <img src="https://invopilot.com/wp-content/uploads/2025/04/ChatGPT-Image-Apr-3-2025-09_50-1.png" alt="InvoPilot" />
+              <img src="/tools/logo.webp" alt="InvoPilot" />
               <span className="ip-f-logo-text">Invo<span>Pilot</span></span>
             </a>
 
@@ -24,8 +24,10 @@ export default function WPFooter() {
             </div>
 
             <div className="ip-f-contact">
-              <div className="ip-f-contact-row">📍 14th Street, Caltech, New Jersey, Alabama</div>
-              <div className="ip-f-contact-row">✉️ <a href="mailto:invopilot@gmail.com">invopilot@gmail.com</a></div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <a href="mailto:hello@invopilot.com" style={{ color: 'var(--muted)', textDecoration: 'none' }}>hello@invopilot.com</a>
+              </div>
               <div className="ip-f-contact-row">🕒 Monday – Friday : 8:00 AM – 5:00 PM</div>
             </div>
           </div>

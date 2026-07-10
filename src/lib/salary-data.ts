@@ -46,6 +46,34 @@ export const salaryData: SalaryEntry[] = [
   { slug: "95000-a-year", type: "yearly", value: 95000, displayLabel: "$95,000 a year" },
   { slug: "110000-a-year", type: "yearly", value: 110000, displayLabel: "$110,000 a year" },
   { slug: "130000-a-year", type: "yearly", value: 130000, displayLabel: "$130,000 a year" },
+
+  // === NEW HOURLY PAGES (Fix 9) ===
+  { slug: "22.5-an-hour", type: "hourly", value: 22.5, displayLabel: "$22.50 an hour" },
+  { slug: "48-an-hour", type: "hourly", value: 48, displayLabel: "$48 an hour" },
+  { slug: "49-an-hour", type: "hourly", value: 49, displayLabel: "$49 an hour" },
+  { slug: "51-an-hour", type: "hourly", value: 51, displayLabel: "$51 an hour" },
+  { slug: "53-an-hour", type: "hourly", value: 53, displayLabel: "$53 an hour" },
+  { slug: "54-an-hour", type: "hourly", value: 54, displayLabel: "$54 an hour" },
+  { slug: "56-an-hour", type: "hourly", value: 56, displayLabel: "$56 an hour" },
+  { slug: "57-an-hour", type: "hourly", value: 57, displayLabel: "$57 an hour" },
+  { slug: "58-an-hour", type: "hourly", value: 58, displayLabel: "$58 an hour" },
+  { slug: "62-an-hour", type: "hourly", value: 62, displayLabel: "$62 an hour" },
+  { slug: "63-an-hour", type: "hourly", value: 63, displayLabel: "$63 an hour" },
+  { slug: "67-an-hour", type: "hourly", value: 67, displayLabel: "$67 an hour" },
+  { slug: "68-an-hour", type: "hourly", value: 68, displayLabel: "$68 an hour" },
+  { slug: "72-an-hour", type: "hourly", value: 72, displayLabel: "$72 an hour" },
+  { slug: "78-an-hour", type: "hourly", value: 78, displayLabel: "$78 an hour" },
+  { slug: "90-an-hour", type: "hourly", value: 90, displayLabel: "$90 an hour" },
+  { slug: "110-an-hour", type: "hourly", value: 110, displayLabel: "$110 an hour" },
+  { slug: "120-an-hour", type: "hourly", value: 120, displayLabel: "$120 an hour" },
+
+  // === NEW YEARLY PAGES (Fix 9) ===
+  { slug: "59000-a-year", type: "yearly", value: 59000, displayLabel: "$59,000 a year" },
+  { slug: "73000-a-year", type: "yearly", value: 73000, displayLabel: "$73,000 a year" },
+  { slug: "76000-a-year", type: "yearly", value: 76000, displayLabel: "$76,000 a year" },
+  { slug: "77000-a-year", type: "yearly", value: 77000, displayLabel: "$77,000 a year" },
+  { slug: "82000-a-year", type: "yearly", value: 82000, displayLabel: "$82,000 a year" },
+  { slug: "92000-a-year", type: "yearly", value: 92000, displayLabel: "$92,000 a year" },
 ];
 
 // ─── Derived helpers ───────────────────────────────────────────────────────────
@@ -85,18 +113,52 @@ export function getEntryFromSlug(slug: string): SalaryEntry | null {
   const existing = salaryData.find((e) => e.slug === slug);
   if (existing) return existing;
 
-  // Forgiving regex: ignores case and allows trailing characters/spaces
-  const hourlyMatch = slug.match(/^(\d+)[-\s]+an[-\s]+hour/i);
+  // Forgiving regex: ignores case and allows trailing characters/spaces, now supports decimals
+  const hourlyMatch = slug.match(/^([\d\.]+)[-\s]+an[-\s]+hour/i);
   if (hourlyMatch) {
-    const val = parseInt(hourlyMatch[1], 10);
-    return { slug, type: "hourly", value: val, displayLabel: `$${val.toLocaleString()} an hour` };
+    const val = parseFloat(hourlyMatch[1]);
+    const displayVal = Number.isInteger(val) ? val.toLocaleString() : val.toFixed(2);
+    return { slug, type: "hourly", value: val, displayLabel: `$${displayVal} an hour` };
   }
 
-  const yearlyMatch = slug.match(/^(\d+)[-\s]+a[-\s]+year/i);
+  // Forgiving regex: ignores case, allows trailing characters, a/an, supports decimals
+  const yearlyMatch = slug.match(/^([\d\.]+)[-\s]+a(?:n)?[-\s]+year/i);
   if (yearlyMatch) {
-    const val = parseInt(yearlyMatch[1], 10);
-    return { slug, type: "yearly", value: val, displayLabel: `$${val.toLocaleString()} a year` };
+    const val = parseFloat(yearlyMatch[1]);
+    const displayVal = Number.isInteger(val) ? val.toLocaleString() : val.toFixed(2);
+    return { slug, type: "yearly", value: val, displayLabel: `$${displayVal} a year` };
   }
 
   return null;
+}
+
+export function getHourlyEntries(): SalaryEntry[] {
+  return salaryData
+    .filter((e) => e.type === "hourly")
+    .sort((a, b) => a.value - b.value);
+}
+
+export function getYearlyEntries(): SalaryEntry[] {
+  return salaryData
+    .filter((e) => e.type === "yearly")
+    .sort((a, b) => a.value - b.value);
+}
+
+export function computeDefaultRows(
+  hourly: number,
+  hoursPerWeek: number,
+  weeksPerYear: number,
+  taxRate: number,
+): Record<string, { gross: number; net: number }> {
+  const annual = hourly * hoursPerWeek * weeksPerYear;
+  const netAnnual = annual * (1 - taxRate / 100);
+  return {
+    hourly:      { gross: hourly,                  net: hourly * (1 - taxRate / 100) },
+    daily:       { gross: hourly * 8,              net: hourly * 8 * (1 - taxRate / 100) },
+    weekly:      { gross: weeksPerYear ? annual / weeksPerYear : 0,       net: weeksPerYear ? netAnnual / weeksPerYear : 0 },
+    biweekly:    { gross: weeksPerYear ? annual / (weeksPerYear / 2) : 0, net: weeksPerYear ? netAnnual / (weeksPerYear / 2) : 0 },
+    semiMonthly: { gross: annual / 24,             net: netAnnual / 24 },
+    monthly:     { gross: annual / 12,             net: netAnnual / 12 },
+    annual:      { gross: annual,                  net: netAnnual },
+  };
 }

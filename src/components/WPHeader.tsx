@@ -10,7 +10,7 @@ export default function WPHeader() {
       <nav className="ip-nav">
         {/* Logo */}
         <a href="https://invopilot.com/" className="ip-logo">
-          <img src="https://invopilot.com/wp-content/uploads/2025/04/ChatGPT-Image-Apr-3-2025-09_50-1.png" alt="InvoPilot Logo" />
+          <img src="/tools/logo.webp" alt="InvoPilot Logo" />
           <span className="ip-logo-text">Invo<span>Pilot</span></span>
         </a>
 

@@ -10,13 +10,18 @@ import {
   STANDARD_HOURS_PER_YEAR,
   STANDARD_HOURS_PER_WEEK,
   STANDARD_WEEKS_PER_YEAR,
+  getRelatedEntries,
 } from "@/lib/salary-data";
+import { buildIntroVariants } from "@/lib/salary-calc-helpers";
+import { getCrossLink } from "@/lib/cross-link";
 import { buildFAQ } from "@/lib/faq-builder";
 
-import Calculator  from "@/components/Calculator";
-import FAQ         from "@/components/FAQ";
-import CTABanner   from "@/components/CTABanner";
-import RelatedLinks from "@/components/RelatedLinks";
+import Calculator      from "@/components/Calculator";
+import FAQ             from "@/components/FAQ";
+import CTABanner       from "@/components/CTABanner";
+import RelatedLinks    from "@/components/RelatedLinks";
+import FractionalRates from "@/components/FractionalRates";
+import PartTimeHours   from "@/components/PartTimeHours";
 
 import styles from "./page.module.css";
 
@@ -55,41 +60,15 @@ export async function generateMetadata({
   };
 }
 
+import { buildJsonLd } from "@/lib/json-ld";
+
 // ─── JSON-LD ──────────────────────────────────────────────────────────────────
-function JsonLd({ slug, faqItems, title }: {
-  slug: string;
-  faqItems: { q: string; a: string }[];
+function JsonLd({ entry, title, faqItems }: {
+  entry: any;
   title: string;
+  faqItems: { q: string; a: string }[];
 }) {
-  const schema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebPage",
-        "@id": `https://invopilot.com/tools/salary-calculator/${slug}`,
-        "url": `https://invopilot.com/tools/salary-calculator/${slug}`,
-        "name": title,
-        "isPartOf": { "@id": "https://invopilot.com" },
-        "breadcrumb": {
-          "@type": "BreadcrumbList",
-          "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://invopilot.com" },
-            { "@type": "ListItem", "position": 2, "name": "Tools", "item": "https://invopilot.com/tools" },
-            { "@type": "ListItem", "position": 3, "name": "Salary Calculator", "item": "https://invopilot.com/tools/salary-calculator" },
-            { "@type": "ListItem", "position": 4, "name": title },
-          ],
-        },
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": faqItems.map(({ q, a }) => ({
-          "@type": "Question",
-          "name": q,
-          "acceptedAnswer": { "@type": "Answer", "text": a },
-        })),
-      },
-    ],
-  };
+  const schema = buildJsonLd(entry, title, faqItems);
 
   return (
     <script
@@ -121,11 +100,12 @@ export default async function SalaryPage({
     : `${entry.displayLabel} Is How Much an Hour?`);
 
   const faqItems = buildFAQ(entry);
-  const related  = salaryData.filter((e) => e.slug !== slug).slice(0, 12);
+  const related  = getRelatedEntries(entry);
+  const crossLink = getCrossLink(entry);
 
   return (
     <>
-      <JsonLd slug={slug} faqItems={faqItems} title={pageTitle} />
+      <JsonLd entry={entry} faqItems={faqItems} title={pageTitle} />
       
 
       <main className={styles.main}>
@@ -133,7 +113,7 @@ export default async function SalaryPage({
         <nav className={styles.crumbs} aria-label="Breadcrumb">
           <a href="https://invopilot.com">Home</a>
           <span aria-hidden>›</span>
-          <a href="/tools/salary-calculator/27-an-hour">Salary Calculator</a>
+          <a href="/tools/salary-calculator">Salary Calculator</a>
           <span aria-hidden>›</span>
           <span aria-current="page">{entry.displayLabel}</span>
         </nav>
@@ -149,7 +129,7 @@ export default async function SalaryPage({
             <p>
               {isHourly ? (
                 <>
-                  <strong>{entry.displayLabel}</strong> is{" "}
+                  <strong>{buildIntroVariants(hourly)}</strong> works out to{" "}
                   <strong className={styles.accent}>{usd(annual)}</strong> per year,
                   based on a standard {STANDARD_HOURS_PER_WEEK}-hour week and {STANDARD_WEEKS_PER_YEAR} weeks
                   ({STANDARD_HOURS_PER_YEAR.toLocaleString()} hours/year). That breaks down to{" "}
@@ -161,12 +141,19 @@ export default async function SalaryPage({
                 <>
                   <strong>{entry.displayLabel}</strong> is{" "}
                   <strong className={styles.accent}>{usd(hourly, 2)}/hour</strong> assuming a
-                  standard 40-hour week and 52 weeks ({STANDARD_HOURS_PER_YEAR.toLocaleString()} hours/year). Monthly that's{" "}
+                  standard 40-hour week and 52 weeks ({STANDARD_HOURS_PER_YEAR.toLocaleString()} hours/year). Monthly that&apos;s{" "}
                   <strong>{usd(monthly)}</strong>, or{" "}
                   <strong>{usd(biweekly)}</strong> biweekly — before tax.
                 </>
               )}
             </p>
+            {crossLink && (
+              <p style={{ marginTop: 16, fontSize: "0.95em", color: "var(--ink-secondary)" }}>
+                <em>
+                  Looking for the inverse? Check out <a href={`/tools/salary-calculator/${crossLink.slug}`} style={{ color: "var(--accent-dark)", fontWeight: 600 }}>{crossLink.displayLabel}</a>.
+                </em>
+              </p>
+            )}
           </div>
         </header>
 
@@ -198,6 +185,18 @@ export default async function SalaryPage({
             defaultWeeksPerYear={STANDARD_WEEKS_PER_YEAR}
           />
         </section>
+
+        {/* Extra Sections (Hourly Only) */}
+        {isHourly && (
+          <>
+            <section className={styles.section}>
+              <PartTimeHours hourlyRate={hourly} />
+            </section>
+            <section className={styles.section}>
+              <FractionalRates baseRate={hourly} />
+            </section>
+          </>
+        )}
 
         {/* Breakdown prose */}
         <section className={styles.section}>
