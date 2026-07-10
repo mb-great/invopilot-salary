@@ -14,11 +14,10 @@ export default function Header() {
         </a>
 
         <nav className={styles.nav}>
-          <a href="/tools/salary-calculator/27-an-hour" className={styles.navLink}>Salary Tools</a>
-          <a href="https://invopilot.com/invoice-generator" className={styles.navLink}>Invoice Generator</a>
+          <a href="/tools/salary-calculator" className={styles.navLink}>Salary Calculator</a>
+          <a href="https://invoice-generator.invopilot.com/" className={styles.navLink}>Invoice Generator</a>
         </nav>
-
-        <a href="https://invopilot.com/invoice-generator" className={styles.cta}>
+        <a href="https://invoice-generator.invopilot.com/" className={styles.cta}>
           Free Invoice ↗
         </a>
       </div>

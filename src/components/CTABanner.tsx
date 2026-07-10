@@ -24,7 +24,7 @@ export default function CTABanner({ hourlyRate }: Props) {
         </p>
       </div>
       <a
-        href="https://invopilot.com/invoice-generator"
+        href="https://invoice-generator.invopilot.com/"
         className={styles.btn}
       >
         Create a free invoice →
