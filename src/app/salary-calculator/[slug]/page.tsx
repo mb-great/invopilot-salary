@@ -47,9 +47,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const entry = getEntryFromSlug(slug);
   if (!entry) return {};
 
@@ -95,9 +95,9 @@ function JsonLd({ entry, title, faqItems }: {
 export default async function SalaryPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
   const entry = getEntryFromSlug(slug);
   if (!entry) notFound();
 

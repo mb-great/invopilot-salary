@@ -33,8 +33,6 @@ export default function SalaryCalculatorHub() {
       >
         <a href="https://invopilot.com" style={{ color: "var(--muted)" }}>Home</a>
         <span aria-hidden>›</span>
-        <a href="/tools" style={{ color: "var(--muted)" }}>Tools</a>
-        <span aria-hidden>›</span>
         <span aria-current="page">Salary Calculator</span>
       </nav>
 
