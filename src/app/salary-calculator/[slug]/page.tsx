@@ -68,7 +68,15 @@ export async function generateMetadata({
   return {
     title,
     description,
-    openGraph: { title, description, type: "website" },
+    alternates: {
+      canonical: `https://invopilot.com/tools/salary-calculator/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `https://invopilot.com/tools/salary-calculator/${slug}`,
+      type: "website",
+    },
     twitter: { card: "summary", title, description },
   };
 }

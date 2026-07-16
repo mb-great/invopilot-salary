@@ -12,10 +12,14 @@ export const metadata: Metadata = {
   title: "Salary Calculator — Convert Hourly to Yearly & More",
   description:
     "Free salary calculator: convert hourly pay to yearly, monthly, biweekly & weekly income. Browse 50+ pre-built salary breakdowns with tax estimates.",
+  alternates: {
+    canonical: "https://invopilot.com/tools/salary-calculator",
+  },
   openGraph: {
     title: "Salary Calculator — Convert Hourly to Yearly & More",
     description:
       "Free salary calculator: convert hourly pay to yearly, monthly, biweekly & weekly income.",
+    url: "https://invopilot.com/tools/salary-calculator",
     type: "website",
   },
 };
