@@ -68,6 +68,10 @@ export async function generateMetadata({
   return {
     title,
     description,
+    robots: {
+      index: true,
+      follow: true,
+    },
     alternates: {
       canonical: `https://invopilot.com/tools/salary-calculator/${slug}`,
     },

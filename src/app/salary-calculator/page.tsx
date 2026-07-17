@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://invopilot.com/tools/salary-calculator",
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "Salary Calculator — Convert Hourly to Yearly & More",
     description:

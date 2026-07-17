@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     'MSME Samadhaan',
     '45 day payment rule India',
   ],
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: 'MSME Late Payment Interest Calculator — InvoPilot',
     description:
